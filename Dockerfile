@@ -11,9 +11,9 @@ WORKDIR /app/
 RUN pip3 install --no-cache-dir --upgrade --requirement requirements.txt
 RUN pip install pytube
 
-# Create a non-root user and switch to it
-RUN useradd -m myuser
-USER myuser
+# Create a non-root user with UID in the required range
+RUN useradd -m -u 10001 myuser
+USER 10001
 
 ENV COOKIES_FILE_PATH="youtube_cookies.txt"
 CMD gunicorn app:app & python3 main.py
